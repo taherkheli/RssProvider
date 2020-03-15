@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace RssProvider.API.Controllers
 {
@@ -10,12 +12,18 @@ namespace RssProvider.API.Controllers
     [HttpGet("api/feeds")]
     public JsonResult GetRssFeeds()
     {
-      return new JsonResult(
-        new List<object>()
-        {
-          new { id = 1, title = "feed 1", DateTime.UtcNow },
-          new { id = 2, title = "feed 453", DateTime.UtcNow }
-        });
+      string url = "http://rss.cnn.com/rss/edition.rss";
+      XmlReader reader = XmlReader.Create(url);
+      SyndicationFeed feed = SyndicationFeed.Load(reader);
+      reader.Close();
+
+      var result = new List<object>();
+      int count = 0;
+
+      foreach (SyndicationItem item in feed.Items)
+        result.Add(new { id = ++count, title = item.Title.Text, publishingDate = item.PublishDate.UtcDateTime });
+                     
+      return new JsonResult(result);
     }
 
     [HttpGet("api/feeds/{id}")]
