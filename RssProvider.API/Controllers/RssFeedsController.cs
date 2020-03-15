@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RssProvider.API.Controllers
 {
@@ -18,6 +16,12 @@ namespace RssProvider.API.Controllers
           new { id = 1, title = "feed 1", DateTime.UtcNow },
           new { id = 2, title = "feed 453", DateTime.UtcNow }
         });
+    }
+
+    [HttpGet("api/feeds/{id}")]
+    public JsonResult GetRssFeedById()
+    {
+      return new JsonResult(new { id = 1, title = "feed 1", description = "blah blah blah", uri = "www.xyz.com", DateTime.UtcNow, });
     }
   }
 }
