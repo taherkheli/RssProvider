@@ -25,6 +25,7 @@ namespace RssProvider.API
         app.UseExceptionHandler();
       }
 
+      app.UseStatusCodePages();
       app.UseMvc();
     }
   }

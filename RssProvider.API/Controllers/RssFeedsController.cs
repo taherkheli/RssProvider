@@ -1,35 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ServiceModel.Syndication;
-using System.Xml;
+using RssProvider.API.DAL;
+using System.Linq;
 
 namespace RssProvider.API.Controllers
 {
   [ApiController]
+  [Route("api/feeds/")]
   public class RssFeedsController : ControllerBase
   {
-    [HttpGet("api/feeds")]
-    public JsonResult GetRssFeeds()
+    [HttpGet]
+    public IActionResult GetRssFeeds()
     {
-      string url = "http://rss.cnn.com/rss/edition.rss";
-      XmlReader reader = XmlReader.Create(url);
-      SyndicationFeed feed = SyndicationFeed.Load(reader);
-      reader.Close();
-
-      var result = new List<object>();
-      int count = 0;
-
-      foreach (SyndicationItem item in feed.Items)
-        result.Add(new { id = ++count, title = item.Title.Text, publishingDate = item.PublishDate.UtcDateTime });
-                     
-      return new JsonResult(result);
+      if (RssFeedDS.Current.RssFeeds == null)
+        return NotFound();
+      else
+        return Ok(RssFeedDS.Current.RssFeeds);
     }
 
-    [HttpGet("api/feeds/{id}")]
-    public JsonResult GetRssFeedById()
+    [HttpGet("{id}")]
+    public IActionResult GetRssFeed(int id)
     {
-      return new JsonResult(new { id = 1, title = "feed 1", description = "blah blah blah", uri = "www.xyz.com", DateTime.UtcNow, });
+
+      var rssFeed = RssFeedDS.Current.RssFeeds.FirstOrDefault(f => f.Id == id);
+
+      if (rssFeed == null)
+        return NotFound();
+      else
+        return Ok(rssFeed);
     }
   }
 }

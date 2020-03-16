@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "90cdc8e8-7b49-411b-9bae-9ac033dfa51c",
+		"name": "RssFeed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Feeds",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:51595/api/feeds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "51595",
+					"path": [
+						"api",
+						"feeds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Feed",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:51595/api/feeds/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "51595",
+					"path": [
+						"api",
+						"feeds",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
