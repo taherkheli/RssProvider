@@ -22,7 +22,7 @@ namespace RssProvider.API
       }
       else
       {
-        app.UseExceptionHandler();
+        app.UseExceptionHandler("/Error");
       }
 
       app.UseStatusCodePages();
